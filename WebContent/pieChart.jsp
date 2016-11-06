@@ -68,8 +68,7 @@
 	DBentry.closeDB();
 	%>
    
-    <div class="w3-container w3-dark-grey header">
-        <h1 class="navIcon"><i class="fa fa-database w3-xxlarge navIcon"></i> Database Interface</h1> </div>
+    
     <nav class="w3-sidenav w3-dark-grey" style="width:70px"> 
         <a href="index.html"><i class="fa fa-home w3-xxlarge navIcon"></i></a> 
         <a href="#"><i class="fa fa-search w3-xxlarge navIcon"></i></a> 
@@ -78,16 +77,18 @@
         <a href="lineChart.html"><i class="fa fa-line-chart w3-xxlarge navIcon"></i></a> 
         <a href="pieChart.jsp"><i class="fa fa-pie-chart w3-xxlarge navIcon"></i></a> 
     </nav>
+    <div class="w3-container w3-dark-grey header">
+        <h1 class="navIcon"><i class="fa fa-database w3-xxlarge navIcon"></i> Database Interface</h1> </div>
     
     <div class="row">
         <div class="col-md-1">
         </div>
-        <div class="col-md-5">
+        <div class="col-md-6">
             <div class="w3-card-8 chart">
                 <canvas id="pieChart" width="300" height="300"></canvas>
             </div>
         </div>
-        <div class="col-md-5">
+        <div class="col-md-4">
            <div class="w3-card-8 chart">
             <table class="table table-bordered table-hover">
                   <% for(int i=0; i<resultNames.size(); i++){ %>

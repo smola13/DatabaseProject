@@ -20,7 +20,7 @@ public class DBentry {
 	StringBuilder sb = new StringBuilder();
 	
 	//change URL to your database server as needed
-	String dbPath="jdbc:mysql://localhost:3306/databaseproject";
+	String dbPath="jdbc:mysql://localhost:3306/cs485_project";
 	
 	public static DBentry getInstance() {
 		if (instance==null) {

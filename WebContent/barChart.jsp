@@ -25,9 +25,9 @@
     ResultSet count = null;
     
     //String condition = "area";
-    String condition = "area";
+    String condition = "species_name";
     
-    getVariables=DBentry.selectStatement("SELECT Distinct " + condition + " FROM sharkdata;");
+    getVariables=DBentry.selectStatement("SELECT Distinct " + condition + " FROM shark_injury;");
     //results2=DBentry.selectStatement("SELECT COUNT(*) AS NumberOfOrders FROM sharkdata;");
 
     ArrayList <String> resultNames = new ArrayList<String>();
@@ -35,11 +35,13 @@
 
 	for (int i=0; getVariables.next(); i++)
 	{
-		resultNames.add( getVariables.getString(1) );
+		if(!getVariables.getString(1).equals("unknown")){
+			resultNames.add( getVariables.getString(1) );
+		}
 	}
 	
 	for(int i=0; i<resultNames.size(); i++){
-		count=DBentry.selectStatement("SELECT COUNT(*) AS total FROM sharkdata WHERE " + condition + " = '"+ resultNames.get(i) +"';");
+		count=DBentry.selectStatement("SELECT COUNT(*) AS total FROM shark_injury WHERE " + condition + " = '"+ resultNames.get(i) +"';");
 		while(count.next()){
 	    	resultCounts.add(count.getInt("total"));
 	    }

@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mpping DTD//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<!-- Hibernate mapping file, it maps a Java class Sport(ID,Sport) to database table sports(id,sports) -->
+
+<hibernate-mapping>
+	<class name="Lab3.Person" table="person">  <!-- Java class Sport to table sport --> 
+		<id name="Case_Number" type="int">
+			<generator class="increment" /> <!-- ID is automatically generated -->
+		</id>
+		<property name="Name" column="name" type="string" />
+		<property name="Sex" column="sex" type="string" />
+		<property name="Age" column="age" type="string" />
+	</class>
+	<class name="Lab3.Location" table="location">  <!-- Java class Sport to table sport --> 
+		<id name="Case_Number" type="int">
+			<generator class="increment" /> <!-- ID is automatically generated -->
+		</id>
+		<property name="Country" column="country" type="string" />
+		<property name="Area" column="area" type="string" />
+		<property name="Location" column="location" type="string" />
+	</class>
+</hibernate-mapping>

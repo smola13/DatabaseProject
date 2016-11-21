@@ -12,23 +12,20 @@
 </head>
 
 <body>
-	
 	<%@ page import="java.io.*" %>
     <%@ page import="java.sql.*" %> 
+    <%@ page import="java.util.*" %>
     <%@ page import="Lab3.*" %>
     <%@ page import="java.util.ArrayList" %>
 
     <%
-
     DBentry DBentry=new DBentry();
     ResultSet getVariables = null;
     ResultSet count = null;
     
-    //String condition = "area";
     String condition = "species_name";
     
     getVariables=DBentry.selectStatement("SELECT Distinct " + condition + " FROM shark_injury;");
-    //results2=DBentry.selectStatement("SELECT COUNT(*) AS NumberOfOrders FROM sharkdata;");
 
     ArrayList <String> resultNames = new ArrayList<String>();
     ArrayList <Integer> resultCounts = new ArrayList<Integer>();
@@ -36,7 +33,7 @@
 	for (int i=0; getVariables.next(); i++)
 	{
 		if(!getVariables.getString(1).equals("unknown")){
-			resultNames.add( getVariables.getString(1) );
+			resultNames.add(getVariables.getString(1));
 		}
 	}
 	
@@ -73,7 +70,7 @@
         <a href="pieChart.jsp"><i class="fa fa-pie-chart w3-xxlarge navIcon"></i></a> 
     </nav>
     <div class="w3-container w3-dark-grey header">
-        <h1 class="navIcon"><i class="fa fa-database w3-xxlarge navIcon"></i> Database Interface</h1> </div>
+        <h1 class="navIcon"><i class="fa fa-database w3-xxlarge navIcon"></i>Global Shark Attacks</h1> </div>
     
     <div class="row">
         <div class="col-md-1">
@@ -86,14 +83,24 @@
         <div class="col-md-4">
            <div class="w3-card-8 chart">
             <table class="table table-bordered table-hover">
-                  <% for(int i=0; i<resultNames.size(); i++){ %>
+        <thead>
+            <tr>
+                <th>Shark Name</th>
+                <th class="sortable">Total Attacks</th>
+            </tr>
+        </thead>
+        
+        <tbody>
+                 <% 
+                  for(int i=0; i<resultNames.size(); i++) { %>
                   	<tr>
-	                  	<th> <%= resultNames.get(i) %> </th>
+	                  	<td> <%= resultNames.get(i) %> </td>
 	                  	<td> <%= resultCounts.get(i) %></td>
                   	</tr>
                   <%	
       			} %>
-    		</table>
+        </tbody>
+    </table>
          </div>
       </div>
     </div>

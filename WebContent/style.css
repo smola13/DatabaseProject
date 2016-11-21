@@ -13,6 +13,9 @@
 nav{
 	padding-top: 106.25px;
 }
+th {
+	cursor: pointer;
+}
 /* ----------------------------
 * Changes Scrollbar Appearance
 *----------------------------*/

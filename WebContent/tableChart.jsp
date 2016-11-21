@@ -19,13 +19,17 @@
     <%@ page import="java.io.*" %>
     <%@ page import="java.sql.*" %> 
     <%@ page import="Lab3.*" %>
+    <%@ page import="java.util.*" %>
 
     <%
-
-    DBentry DBentry=new DBentry();
-    ResultSet results = null;
-    //results=DBentry.selectStatement("SELECT * FROM customer");
-    results=DBentry.selectStatement("SELECT * FROM sharkdata");
+    
+    List values = null;
+    List count = null;
+    
+    Hibernate hibernate = new Hibernate();
+    count = hibernate.countDistinct(null, null);
+    values = hibernate.listRows("FROM Location", "Location");
+    System.out.println(count.get(0));
 
     %>
    
@@ -46,51 +50,26 @@
            <div class="w3-card-8 chart">
             <table class="table table-bordered table-hover">
                 <tr>
-                    <th>Date</th>
-                    <th>Year</th>
-                    <th>Type</th>
                     <th>Country</th>
-<!--
                     <th>Area</th>
                     <th>Location</th>
-                    <th>Activity</th>
-                    <th>Name</th>
-                    <th>Gender</th>
-                    <th>Age</th>
-                    <th>Injury</th>
-                    <th>Fatal</th>
-                    <th>Time</th>
-                    <th>Species</th>
-                    <th>Source</th>
--->
+
                 </tr>
 
             <%
-            while (results.next()) {
+            for (@SuppressWarnings("rawtypes") Iterator iterator = values.iterator(); iterator.hasNext();){
+        		 Location location = (Location) iterator.next();
+        	
                  %>
                  <tr>
-                    <td><%= results.getString(2)%></td>
-                    <td><%= results.getString(3)%></td>
-                    <td><%= results.getString(4)%></td>
-                    <td><%= results.getString(5)%></td>
-<!--
-                    <td><%= results.getString(6)%></td>
-                    <td><%= results.getString(7)%></td>
-                    <td><%= results.getString(8)%></td>
-                    <td><%= results.getString(9)%></td>
-                    <td><%= results.getString(10)%></td>
-                    <td><%= results.getString(11)%></td>
-                    <td><%= results.getString(12)%></td>
-                    <td><%= results.getString(13)%></td>
-                    <td><%= results.getString(14)%></td>
-                    <td><%= results.getString(15)%></td>
-                    <td><%= results.getString(16)%></td>
--->
+                 
+                    <td><%= location.getCountry() %></td>
+                    <td><%= location.getArea() %></td>
+                    <td><%= location.getLocation() %></td>
+
                  </tr>
                 <%
             }
-
-            DBentry.closeDB();
 
             %>
             </table>

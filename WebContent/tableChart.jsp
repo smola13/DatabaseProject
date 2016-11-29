@@ -2,20 +2,19 @@
 <html>
 
 <head>
-    <title>Home Screen Admin</title>
-<!--    <link rel="stylesheet" href="style.css">-->
+    <title>Global Shark Attack Database</title>
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
-<!--    <link rel="stylesheet" href="bootstrap.min.css">-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.3.0/Chart.bundle.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <script src="sweetalert.min.js"></script>
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/bootstrap.min.css" />
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/style.css" />
     <link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}http://www.w3schools.com/lib/w3.css" />
+	<link type="text/css" rel="stylesheet" href="${pageContext.request.contextPath}/sweetalert.css">
 </head>
 
 <body>
-   
     <%@ page import="java.io.*" %>
     <%@ page import="java.sql.*" %> 
     <%@ page import="Lab3.*" %>
@@ -93,21 +92,19 @@
 
     %>
    
-    <nav class="w3-sidenav w3-dark-grey" style="width:70px; height:130%"> 
-        <a href="index.html"><i class="fa fa-home w3-xxlarge navIcon"></i></a> 
-        <a href="#"><i class="fa fa-search w3-xxlarge navIcon"></i></a> 
-        <a href="tableChart.jsp"><i class="fa fa-table w3-xxlarge navIcon"></i></a> 
-        <a href="barChart.jsp"><i class="fa fa-bar-chart w3-xxlarge navIcon"></i></a> 
-        <a href="lineChart.html"><i class="fa fa-line-chart w3-xxlarge navIcon"></i></a> 
-        <a href="pieChart.jsp"><i class="fa fa-pie-chart w3-xxlarge navIcon"></i></a> 
-    </nav>
-    <div class="w3-container w3-dark-grey header">
-        <h1 class="navIcon"><i class="fa fa-database w3-xxlarge navIcon"></i> Database Interface</h1> </div>
-    <div class="row">
-        <div class="col-md-1">
-        </div>
-        <div class="col-md-5">
-           
+       <nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="search.jsp">Global Shark Attack Database</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li><a href="tableChart.jsp">Home</a></li>
+      <li><a href="search.jsp">Search Attacks</a></li> 
+    </ul>
+  </div>
+</nav>
+    <div class="rowResults">
+        <div class="col-md-3">
             <table class="table table-bordered table-hover">
                 <tr>
 
@@ -166,19 +163,17 @@
       			} %>
             </table>
         </div>
-        <div class="col-md-5">
-            
-        </div>
-        <script>
-        	function goHome(){
-        		window.location = "http://localhost:8080/Lab3/index.html";
-        	}
-        </script>
+     
         <% if(count == 0){%>
-        <div class="w3-card-8" style="margin-top: 100px; width: 25%; margin-left: 650px; text-align: center; padding: 50px;">
-        	<h3>NO RESULTS!</h3>
-        	<button onclick="goHome()">Go Back to Search</button>
-        </div>
+        <script>
+        swal({
+        	  title: "No Results...",
+        	  confirmButtonText: "OK"
+        	},
+        	  function(){
+        	    window.location.href = 'search.jsp';
+        	});
+        </script>
        <% }%>
     </div>
 </body>

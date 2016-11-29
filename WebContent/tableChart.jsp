@@ -20,16 +20,76 @@
     <%@ page import="java.sql.*" %> 
     <%@ page import="Lab3.*" %>
     <%@ page import="java.util.*" %>
+    
+    <%
+
+    
+    String caseNumber = request.getParameter("caseNumber");
+    //String caseNumber = "1";
+    String gender = request.getParameter("gender");
+    //String gender = "";
+    String age = request.getParameter("age");
+    //String age = "";
+    String date = request.getParameter("date");
+    String year = request.getParameter("year");
+    String species = request.getParameter("speciesName");
+    String fatal = request.getParameter("fatal");
+    String country = request.getParameter("country");
+    String area = request.getParameter("state");
+    
+    String select1 = "";
+    String select2 = "";
+    String select3 = "";
+    String select4 = "";
+    String select5 = "";
+    String select6 = "";
+    
+    int count = 0;
+%>
 
     <%
+    DBentry DBentry=new DBentry();
+    ResultSet result = null; 
     
-    List values = null;
-    List count = null;
+    String query = "SELECT * FROM combinedshark WHERE case_number < 3100 ";
     
-    Hibernate hibernate = new Hibernate();
-    count = hibernate.countDistinct(null, null);
-    values = hibernate.listRows("FROM Location", "Location");
-    System.out.println(count.get(0));
+    if( age != "" ) {
+    	query += " AND age= '"+ age +"'";
+    }
+    if( gender != "" ) {
+    	query += " AND sex= '"+ gender +"'";
+    }
+    if( date != "" ) {
+    	query += " AND date= '"+ date +"'";
+    }
+    if( year != "" ) {
+    	query += " AND year= '"+ year +"'";
+    }
+    if( species != "" ) {
+    	query += " AND species like '%"+ species +"%'";
+    }
+    if( fatal != "" ) {
+    	query += " AND fatal_yn= '"+ fatal +"'";
+    }
+    if( country != "" ) {
+    	query += " AND country= '"+ country +"'";
+    }
+    if( area != "" ) {
+    	query += " AND area= '"+ area +"'";
+    }
+    
+    //getVariables=DBentry.selectStatement("SELECT Distinct " + condition + " FROM combinedShark;");
+    if (caseNumber != ""){
+    	result = DBentry.selectStatement("SELECT * FROM combinedshark WHERE case_number = '"+ caseNumber +"';");
+    }
+    else{
+    	result = DBentry.selectStatement(query);
+    }
+    
+   
+
+    ArrayList <String> resultNames = new ArrayList<String>();
+    ArrayList <Integer> resultCounts = new ArrayList<Integer>();
 
     %>
    
@@ -47,37 +107,79 @@
         <div class="col-md-1">
         </div>
         <div class="col-md-5">
-           <div class="w3-card-8 chart">
+           
             <table class="table table-bordered table-hover">
                 <tr>
-                    <th>Country</th>
-                    <th>Area</th>
-                    <th>Location</th>
+
+                    <% if (caseNumber != "" || (select1 == "" && select2 == "" && select3 == "" && select4 == "" && select5 == "" && select6 == "")){ %>
+	                  	<th> Case Number </th>
+	                  	<th> Date </th>
+	                  	<th> Year </th>
+	                  	<th> Type </th>
+	                  	<th> Country </th>
+	                  	<th> Area </th>
+	                  	<th> Location </th>
+	                  	<th> Activity </th>
+	                  	<th> Name </th>
+	                  	<th> Gender </th>
+	                  	<th> Age </th>
+	                  	<th> Injury </th>
+	                  	<th> Fatal </th>
+	                  	<th> Time </th>
+	                  	<th> Species </th>
+	                  	<th> Investigator </th>
+	                 <% } %>
+                    <% if (select1 != ""){ %>
+	                  	<th>  <%= select1 %> </th>
+	                 <% } %>
+                    <% if (select2 != ""){ %>
+	                  	<th>  <%= select2 %> </th>
+	                 <% } %>
+	                 <% if (select3 != ""){ %>
+	                  	<th>  <%= select3 %> </th>
+	                 <% } %>
+	                 <% if (select4 != ""){ %>
+	                  	<th>  <%= select4 %> </th>
+	                 <% } %>
+	                 <% if (select5 != ""){ %>
+	                  	<th>  <%= select5 %> </th>
+	                 <% } %>
+	                 <% if (select6 != ""){ %>
+	                  	<th>  <%= select6 %> </th>
+	                 <% } %>
+	                 
 
                 </tr>
 
-            <%
-            for (@SuppressWarnings("rawtypes") Iterator iterator = values.iterator(); iterator.hasNext();){
-        		 Location location = (Location) iterator.next();
-        	
-                 %>
-                 <tr>
-                 
-                    <td><%= location.getCountry() %></td>
-                    <td><%= location.getArea() %></td>
-                    <td><%= location.getLocation() %></td>
-
-                 </tr>
-                <%
-            }
-
-            %>
+            <% 
+            	for (int i=0; result.next(); i++) { %>
+                  	<tr>
+                  		<%for (int k=1; k<17; k++) { %>
+                  		<% if (result.getString(k) != null){ %>
+	                  		<td> <%= result.getString(k) %> </td>
+	                  		
+	                  	<% count++;} 
+	                  	}%>
+	                  	
+                  	</tr>
+                  <%	
+      			} %>
             </table>
-            </div>
         </div>
         <div class="col-md-5">
             
         </div>
+        <script>
+        	function goHome(){
+        		window.location = "http://localhost:8080/Lab3/index.html";
+        	}
+        </script>
+        <% if(count == 0){%>
+        <div class="w3-card-8" style="margin-top: 100px; width: 25%; margin-left: 650px; text-align: center; padding: 50px;">
+        	<h3>NO RESULTS!</h3>
+        	<button onclick="goHome()">Go Back to Search</button>
+        </div>
+       <% }%>
     </div>
 </body>
 

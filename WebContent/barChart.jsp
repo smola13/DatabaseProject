@@ -17,15 +17,33 @@
     <%@ page import="java.util.*" %>
     <%@ page import="Lab3.*" %>
     <%@ page import="java.util.ArrayList" %>
+    
+    <%
+
+    
+    String caseNumber = request.getParameter("caseNumber");
+    String gender = request.getParameter("sex");
+    String age = request.getParameter("age");
+    String date = request.getParameter("date");
+    String year = request.getParameter("year");
+    String species = request.getParameter("speciesName");
+    String fatal = request.getParameter("fatal");
+    String country = request.getParameter("country");
+    String state = request.getParameter("area");
+
+    
+%>
 
     <%
     DBentry DBentry=new DBentry();
     ResultSet getVariables = null;
     ResultSet count = null;
     
-    String condition = "species_name";
+    String condition = "country";
     
-    getVariables=DBentry.selectStatement("SELECT Distinct " + condition + " FROM shark_injury;");
+    
+    
+    getVariables=DBentry.selectStatement("SELECT Distinct " + condition + " FROM combinedShark;");
 
     ArrayList <String> resultNames = new ArrayList<String>();
     ArrayList <Integer> resultCounts = new ArrayList<Integer>();
@@ -38,7 +56,7 @@
 	}
 	
 	for(int i=0; i<resultNames.size(); i++){
-		count=DBentry.selectStatement("SELECT COUNT(*) AS total FROM shark_injury WHERE " + condition + " = '"+ resultNames.get(i) +"';");
+		count=DBentry.selectStatement("SELECT COUNT(*) AS total FROM combinedShark WHERE " + condition + " = '"+ resultNames.get(i) +"';");
 		while(count.next()){
 	    	resultCounts.add(count.getInt("total"));
 	    }
